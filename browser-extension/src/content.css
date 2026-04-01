@@ -1,0 +1,68 @@
+/**
+ * GhostGuard Content Script Styles
+ */
+
+/* Indicator notification */
+.ghostguard-indicator {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2147483647;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ghostguard-indicator.ghostguard-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.ghostguard-icon {
+  font-size: 18px;
+}
+
+.ghostguard-message {
+  white-space: nowrap;
+}
+
+/* Highlight placeholders in input (optional visual feedback) */
+textarea:focus,
+input[type="text"]:focus {
+  /* Could add subtle indicator border */
+}
+
+/* Redacted text styling in responses */
+.ghostguard-redacted {
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: help;
+  position: relative;
+}
+
+.ghostguard-redacted:hover::after {
+  content: attr(data-original);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 2147483647;
+}

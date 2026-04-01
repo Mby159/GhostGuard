@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ghostguard"
+version = "0.1.0"
+description = "Privacy middleware for AI applications - detect, redact, and restore sensitive information"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "GhostGuard Contributors" }
+]
+keywords = ["privacy", "middleware", "ai", "redact", "sensitive-data", "mcp"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = []
+
+[project.optional-dependencies]
+mcp = ["mcp>=1.0.0"]
+global = ["pywin32>=306", "keyboard>=0.13.5"]
+agents = ["httpx>=0.27.0"]
+ocr = ["Pillow>=10.0.0", "pytesseract>=0.3.10"]
+ocr-easyocr = ["Pillow>=10.0.0", "easyocr>=1.7.0"]
+ocr-paddle = ["Pillow>=10.0.0", "paddleocr>=2.7.0"]
+dev = ["pytest", "pytest-asyncio"]
+
+[project.scripts]
+ghostguard = "ghostguard.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/ghostguard/ghostguard"
+Repository = "https://github.com/ghostguard/ghostguard"
+
+[tool.hatch.build.targets.wheel]
+packages = ["ghostguard"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"

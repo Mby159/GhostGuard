@@ -1,0 +1,57 @@
+{
+  "manifest_version": 3,
+  "name": "GhostGuard - Privacy Shield",
+  "version": "0.1.0",
+  "description": "Automatically detect and redact sensitive information in AI chat interfaces",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "clipboardRead",
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "*://chat.openai.com/*",
+    "*://chatgpt.com/*",
+    "*://claude.ai/*",
+    "*://bard.google.com/*",
+    "*://gemini.google.com/*",
+    "*://poe.com/*",
+    "*://*.deepseek.com/*",
+    "*://*.moonshot.cn/*",
+    "*://*.zhipuai.cn/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "src/icons/icon16.png",
+      "48": "src/icons/icon48.png",
+      "128": "src/icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "src/icons/icon16.png",
+    "48": "src/icons/icon48.png",
+    "128": "src/icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://chat.openai.com/*",
+        "*://chatgpt.com/*",
+        "*://claude.ai/*",
+        "*://bard.google.com/*",
+        "*://gemini.google.com/*",
+        "*://poe.com/*",
+        "*://*.deepseek.com/*",
+        "*://*.moonshot.cn/*",
+        "*://*.zhipuai.cn/*"
+      ],
+      "js": ["src/content.js"],
+      "css": ["src/content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  }
+}
