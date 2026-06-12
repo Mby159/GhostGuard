@@ -54,6 +54,27 @@ class IDCardDetector(RegexDetector):
     def risk_level(self) -> SensitivityLevel:
         return SensitivityLevel.CRITICAL
 
+    def validate(self, value: str) -> bool:
+        """Validate Chinese ID card checksum and date fields."""
+        if len(value) != 18:
+            return False
+        try:
+            year = int(value[6:10])
+            month = int(value[10:12])
+            day = int(value[12:14])
+            if not (1900 <= year <= 2099 and 1 <= month <= 12 and 1 <= day <= 31):
+                return False
+        except ValueError:
+            return False
+
+        weights = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
+        check_codes = "10X98765432"
+        try:
+            checksum = sum(int(value[i]) * weights[i] for i in range(17))
+            return value[17].upper() == check_codes[checksum % 11]
+        except (ValueError, IndexError):
+            return False
+
 
 class BankCardDetector(RegexDetector):
     """Detect bank card numbers with Luhn validation"""
