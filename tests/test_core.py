@@ -39,7 +39,7 @@ class TestGhostGuard:
         assert "13812345678" in final
 
     def test_multiple_types(self):
-        text = "Phone 13812345678, email test@example.com, ID 110101199003074562"
+        text = "Phone 13812345678, email test@example.com, ID 11010519491231002X"
         results = self.guard.detect(text)
         types = {r.info_type for r in results}
         assert "phone" in types

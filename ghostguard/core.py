@@ -112,6 +112,13 @@ class GhostGuard:
         all_results = []
         min_risk_order = self._get_risk_order(self.config.min_risk_level)
 
+        # Keep placeholders deterministic per detection/redaction call instead
+        # of leaking counter state across unrelated inputs.
+        for detector in self._detectors.values():
+            reset = getattr(detector, "reset_counter", None)
+            if callable(reset):
+                reset()
+
         for detector in self._detectors.values():
             if not self.config.is_type_enabled(detector.name):
                 continue
