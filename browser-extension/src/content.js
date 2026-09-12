@@ -135,7 +135,7 @@
       // Store mappings
       Object.assign(placeholderMap, mappings);
       for (const [placeholder, original] of Object.entries(mappings)) {
-        reverseMap[original] = placeholder;
+        reverseMap[placeholder] = original;  // P0 fix: was reversed
       }
 
       // Prevent default paste and insert redacted text

@@ -79,10 +79,11 @@ class AIProxy:
                 request["prompt"] = cleaned
                 all_mapping.update(mapping)
             elif isinstance(request["prompt"], list):
-                for item in request["prompt"]:
+                # P0 fix: actually write cleaned text back to list items
+                for i, item in enumerate(request["prompt"]):
                     if isinstance(item, str):
                         cleaned, mapping = self.guard.process_input(item)
-                        # Note: can't easily replace in list without knowing structure
+                        request["prompt"][i] = cleaned
                         all_mapping.update(mapping)
 
         # Process system message if separate
