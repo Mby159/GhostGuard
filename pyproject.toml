@@ -38,8 +38,9 @@ dev = ["pytest", "pytest-asyncio"]
 ghostguard = "ghostguard.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/ghostguard/ghostguard"
-Repository = "https://github.com/ghostguard/ghostguard"
+Homepage = "https://github.com/Mby159/GhostGuard"
+Repository = "https://github.com/Mby159/GhostGuard"
+Issues = "https://github.com/Mby159/GhostGuard/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["ghostguard"]
