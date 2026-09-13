@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: test (py${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.11', '3.12']
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install package with dev extras
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e ".[dev]"
+
+    - name: Assert core install stays dependency-free
+      run: |
+        python -c "
+        from importlib.metadata import requires
+        core = [r for r in (requires('ghostguard') or []) if 'extra ==' not in r]
+        assert not core, f'core must have zero runtime deps, got: {core}'
+        print('OK: core runtime requirements =', core)
+        "
+
+    - name: Run tests
+      run: |
+        python -m pytest -q
